@@ -17,6 +17,19 @@ class Robot
     @f = facing
   end
 
+  def move
+    case @f
+    when Navigation::NORTH
+      @y += 1 unless @y >= 4
+    when Navigation::EAST
+      @x += 1 unless @x >= 4
+    when Navigation::SOUTH
+      @y -= 1 unless @y <= 0
+    when Navigation::WEST
+      @x -= 1 unless @x <= 0
+    end
+  end
+
   def report
     [@x, @y, @f]
   end
