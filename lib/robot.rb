@@ -10,9 +10,10 @@ class Robot
     @f = nil
   end
 
-  def place(x_position, y_position, facing)
-    @x = x_position
-    @y = y_position
+  def place(x_coord, y_coord, facing)
+    return if x_coord < 0 || x_coord > 4 || y_coord < 0 || y_coord > 4
+    @x = x_coord
+    @y = y_coord
     @f = facing
   end
 

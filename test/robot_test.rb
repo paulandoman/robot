@@ -19,4 +19,13 @@ class PlacementTests < Test::Unit::TestCase
     assert_equal y, 2
     assert_equal f, Navigation::SOUTH
   end
+
+  def test_report_values_are_nil_when_robot_illegally_placed
+    robot = Robot.new
+    robot.place(-1, 6, Navigation::EAST)
+    x, y, f = robot.report
+    assert_nil x
+    assert_nil y
+    assert_nil f
+  end
 end
