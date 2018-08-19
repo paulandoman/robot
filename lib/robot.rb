@@ -22,8 +22,20 @@ class Robot
 
   # update coordinates unless new location is outside boundary
   def move
+    return if unplaced?
     new_location = [@x, @y].zip(@f).map { |a, b| a + b }
     @x, @y = new_location unless invalid?(new_location)
+  end
+
+  # turn robot 90 degrees to the left
+  def left
+    return if unplaced?
+    @f = case @f
+         when Navigation::NORTH then Navigation::WEST
+         when Navigation::EAST then Navigation::NORTH
+         when Navigation::SOUTH then Navigation::EAST
+         when Navigation::WEST then Navigation::SOUTH
+         end
   end
 
   # return the coordinates of the robot
@@ -40,5 +52,10 @@ class Robot
 
     x < Border::WEST || x > Border::EAST || \
       y > Border::NORTH || y < Border::SOUTH
+  end
+
+  # return true if robot not yet placed within border
+  def unplaced?
+    @x.nil? || @y.nil? || @f.nil?
   end
 end

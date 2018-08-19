@@ -3,6 +3,15 @@ require './lib/navigation.rb'
 require 'test/unit'
 
 class MovementTests < Test::Unit::TestCase
+  def test_report_values_are_nil_when_trying_to_move_unplaced_robot
+    robot = Robot.new
+    robot.move
+    x, y, f = robot.report
+    assert_nil x
+    assert_nil y
+    assert_nil f
+  end
+
   def test_place_robot_move_one_spot_north
     robot = Robot.new
     robot.place(0, 0, Navigation::NORTH)
