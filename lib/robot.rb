@@ -38,6 +38,17 @@ class Robot
          end
   end
 
+  # turn robot 90 degrees to the right
+  def right
+    return if unplaced?
+    @f = case @f
+         when Navigation::NORTH then Navigation::EAST
+         when Navigation::EAST then Navigation::SOUTH
+         when Navigation::SOUTH then Navigation::WEST
+         when Navigation::WEST then Navigation::NORTH
+         end
+  end
+
   # return the coordinates of the robot
   def report
     [@x, @y, @f]
