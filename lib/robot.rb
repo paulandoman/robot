@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 
-# Robot has a x, y position and a direction
+require './lib/border.rb'
+
+# Robot has an x, y position and a direction f
 class Robot
   attr_reader :x, :y, :f
 
@@ -10,27 +12,33 @@ class Robot
     @f = nil
   end
 
+  # place robot if coordinates are within boundary
   def place(x_coord, y_coord, facing)
-    return if x_coord < 0 || x_coord > 4 || y_coord < 0 || y_coord > 4
+    return if invalid?([x_coord, y_coord])
     @x = x_coord
     @y = y_coord
     @f = facing
   end
 
+  # update coordinates unless new location is outside boundary
   def move
-    case @f
-    when Navigation::NORTH
-      @y += 1 unless @y >= 4
-    when Navigation::EAST
-      @x += 1 unless @x >= 4
-    when Navigation::SOUTH
-      @y -= 1 unless @y <= 0
-    when Navigation::WEST
-      @x -= 1 unless @x <= 0
-    end
+    new_location = [@x, @y].zip(@f).map { |a, b| a + b }
+    @x, @y = new_location unless invalid?(new_location)
   end
 
+  # return the coordinates of the robot
   def report
     [@x, @y, @f]
+  end
+
+  private
+
+  # return true if new location is outside boundary
+  def invalid?(location)
+    x = location.first
+    y = location.last
+
+    x < Border::WEST || x > Border::EAST || \
+      y > Border::NORTH || y < Border::SOUTH
   end
 end
