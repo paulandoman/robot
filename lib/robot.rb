@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 require './lib/border.rb'
 
 # Robot has an x, y position and a direction f
@@ -30,23 +28,13 @@ class Robot
   # turn robot 90 degrees to the left
   def left
     return if unplaced?
-    @f = case @f
-         when Navigation::NORTH then Navigation::WEST
-         when Navigation::EAST then Navigation::NORTH
-         when Navigation::SOUTH then Navigation::EAST
-         when Navigation::WEST then Navigation::SOUTH
-         end
+    @f = Navigation::ALL[Navigation::ALL.index(@f) - 1]
   end
 
   # turn robot 90 degrees to the right
   def right
     return if unplaced?
-    @f = case @f
-         when Navigation::NORTH then Navigation::EAST
-         when Navigation::EAST then Navigation::SOUTH
-         when Navigation::SOUTH then Navigation::WEST
-         when Navigation::WEST then Navigation::NORTH
-         end
+    @f = Navigation::ALL[Navigation::ALL.index(@f) + 1 % Navigation::ALL.size]
   end
 
   # return the coordinates of the robot
