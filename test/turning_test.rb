@@ -14,17 +14,17 @@ class TurningTests < Test::Unit::TestCase
 
   def test_place_turn_left
     robot = Robot.new
-    robot.place(0, 0, Navigation::NORTH)
+    robot.place(0, 0, 'NORTH')
     robot.left
     x, y, f = robot.report
     assert_equal x, 0
     assert_equal y, 0
-    assert_equal f, Navigation::WEST
+    assert_equal f, 'WEST'
   end
 
   def test_move_twice_turn_left_move_again
     robot = Robot.new
-    robot.place(1, 2, Navigation::EAST)
+    robot.place(1, 2, 'EAST')
     robot.move
     robot.move
     robot.left
@@ -32,7 +32,7 @@ class TurningTests < Test::Unit::TestCase
     x, y, f = robot.report
     assert_equal x, 3
     assert_equal y, 3
-    assert_equal f, Navigation::NORTH
+    assert_equal f, 'NORTH'
   end
 
   def test_report_values_are_nil_when_trying_to_turn_right_unplaced_robot
@@ -46,17 +46,17 @@ class TurningTests < Test::Unit::TestCase
 
   def test_place_turn_right
     robot = Robot.new
-    robot.place(0, 0, Navigation::NORTH)
+    robot.place(0, 0, 'NORTH')
     robot.right
     x, y, f = robot.report
     assert_equal x, 0
     assert_equal y, 0
-    assert_equal f, Navigation::EAST
+    assert_equal f, 'EAST'
   end
 
   def test_move_twice_turn_right_move_again
     robot = Robot.new
-    robot.place(1, 2, Navigation::EAST)
+    robot.place(1, 2, 'EAST')
     robot.move
     robot.move
     robot.right
@@ -64,17 +64,17 @@ class TurningTests < Test::Unit::TestCase
     x, y, f = robot.report
     assert_equal x, 3
     assert_equal y, 1
-    assert_equal f, Navigation::SOUTH
+    assert_equal f, 'SOUTH'
   end
 
   def test_turn_left_turn_right
     robot = Robot.new
-    robot.place(4, 4, Navigation::SOUTH)
+    robot.place(4, 4, 'SOUTH')
     robot.left
     robot.right
     x, y, f = robot.report
     assert_equal x, 4
     assert_equal y, 4
-    assert_equal f, Navigation::SOUTH
+    assert_equal f, 'SOUTH'
   end
 end

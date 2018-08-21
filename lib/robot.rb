@@ -13,15 +13,18 @@ class Robot
   # place robot if coordinates are within boundary
   def place(x_coord, y_coord, facing)
     return if invalid?([x_coord, y_coord])
-    @x = x_coord
-    @y = y_coord
-    @f = facing
+    @x = x_coord.to_i
+    @y = y_coord.to_i
+
+    # convert to a vector
+    @f = Navigation.const_get(facing.upcase)
   end
 
   # update coordinates unless new location is outside boundary
   def move
     return if unplaced?
-    new_location = [@x, @y].zip(@f).map { |a, b| a + b }
+    facing = @f.drop(1)
+    new_location = [@x, @y].zip(facing).map { |a, b| a + b }
     @x, @y = new_location unless invalid?(new_location)
   end
 
@@ -39,15 +42,19 @@ class Robot
 
   # return the coordinates of the robot
   def report
-    [@x, @y, @f]
+    if unplaced?
+      [nil, nil, nil]
+    else
+      [@x, @y, @f.first.upcase]
+    end
   end
 
   private
 
   # return true if new location is outside boundary
   def invalid?(location)
-    x = location.first
-    y = location.last
+    x = location.first.to_i
+    y = location.last.to_i
 
     x < Border::WEST || x > Border::EAST || \
       y > Border::NORTH || y < Border::SOUTH
