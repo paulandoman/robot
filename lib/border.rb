@@ -1,6 +1,4 @@
 class Border
-  NORTH = 4
-  EAST = 4
-  SOUTH = 0
-  WEST = 0
+  HEIGHT = 4
+  WIDTH = 4
 end

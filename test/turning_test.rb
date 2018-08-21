@@ -22,6 +22,16 @@ class TurningTests < Test::Unit::TestCase
     assert_equal f, 'WEST'
   end
 
+  def test_face_west_turn_right
+    robot = Robot.new
+    robot.place(2, 4, 'WEST')
+    robot.right
+    x, y, f = robot.report
+    assert_equal x, 2
+    assert_equal y, 4
+    assert_equal f, 'NORTH'
+  end
+
   def test_move_twice_turn_left_move_again
     robot = Robot.new
     robot.place(1, 2, 'EAST')
