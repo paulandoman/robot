@@ -1,4 +1,4 @@
 class Border
-  HEIGHT = 4
-  WIDTH = 4
+  HEIGHT = 5
+  WIDTH = 5
 end

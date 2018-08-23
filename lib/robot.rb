@@ -1,4 +1,5 @@
 require './lib/border.rb'
+require './lib/navigation.rb'
 
 # Robot has an x, y position and a direction f
 class Robot
@@ -17,7 +18,7 @@ class Robot
     @x = x_coord.to_i
     @y = y_coord.to_i
 
-    if Navigation.has? facing then @f = Navigation.const_get facing.upcase
+    if Navigation.has? facing then @f = Navigation.get facing
     else
       puts 'Invalid robot direction - please use NORTH, SOUTH, EAST or WEST'
     end
@@ -26,7 +27,7 @@ class Robot
   # update coordinates unless new location is outside boundary
   def move
     return unless placed?
-    facing = @f.drop(1)
+    facing = @f.coordinates
     new_location = [@x, @y].zip(facing).map { |a, b| a + b }
     @x, @y = new_location if valid?(new_location)
   end
@@ -46,7 +47,7 @@ class Robot
   # return the coordinates of the robot
   def report
     if placed?
-      facing = @f.first.upcase
+      facing = @f.label.upcase
       puts "#{x},#{y},#{facing}"
       [@x, @y, facing]
     else
@@ -66,15 +67,12 @@ class Robot
     x = location.first
     y = location.last
 
-    if non_integer_string?(x, y)
-      puts 'Please enter valid coordinates for x, y'
-      return false
-    end
+    return false if non_integer_string?(x, y)
 
     x = x.to_i
     y = y.to_i
 
-    x >= 0 && x <= Border::WIDTH && y <= Border::HEIGHT && y >= 0
+    x >= 0 && x < Border::WIDTH && y < Border::HEIGHT && y >= 0
   end
 
   # return true if one or more location strings cant be converted to integers

@@ -1,5 +1,4 @@
 require './lib/robot.rb'
-require './lib/navigation.rb'
 require 'test/unit'
 
 class TurningTests < Test::Unit::TestCase
