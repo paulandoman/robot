@@ -14,73 +14,73 @@ class MovementTests < Test::Unit::TestCase
 
   def test_place_robot_move_one_spot_north
     robot = Robot.new
-    robot.place(0, 0, Navigation::NORTH)
+    robot.place(0, 0, 'NORTH')
     robot.move
     x, y, f = robot.report
     assert_equal x, 0
     assert_equal y, 1
-    assert_equal f, Navigation::NORTH
+    assert_equal f, 'NORTH'
   end
 
   def test_place_robot_move_one_spot_south
     robot = Robot.new
-    robot.place(1, 3, Navigation::SOUTH)
+    robot.place(1, 3, 'SOUTH')
     robot.move
     x, y, f = robot.report
     assert_equal x, 1
     assert_equal y, 2
-    assert_equal f, Navigation::SOUTH
+    assert_equal f, 'SOUTH'
   end
 
   def test_place_robot_move_one_spot_west
     robot = Robot.new
-    robot.place(1, 0, Navigation::WEST)
+    robot.place(1, 0, 'WEST')
     robot.move
     x, y, f = robot.report
     assert_equal x, 0
     assert_equal y, 0
-    assert_equal f, Navigation::WEST
+    assert_equal f, 'WEST'
   end
 
   def test_place_robot_move_one_spot_east
     robot = Robot.new
-    robot.place(3, 0, Navigation::EAST)
+    robot.place(3, 0, 'EAST')
     robot.move
     x, y, f = robot.report
     assert_equal x, 4
     assert_equal y, 0
-    assert_equal f, Navigation::EAST
+    assert_equal f, 'EAST'
   end
 
   def test_place_robot_move_two_spots_north
     robot = Robot.new
-    robot.place(0, 0, Navigation::NORTH)
+    robot.place(0, 0, 'NORTH')
     robot.move
     robot.move
     x, y, f = robot.report
     assert_equal x, 0
     assert_equal y, 2
-    assert_equal f, Navigation::NORTH
+    assert_equal f, 'NORTH'
   end
 
   def test_place_robot_ignore_if_trying_to_move_off_board_north
     robot = Robot.new
-    robot.place(2, 4, Navigation::NORTH)
+    robot.place(2, 4, 'NORTH')
     robot.move
     x, y, f = robot.report
     assert_equal x, 2
     assert_equal y, 4
-    assert_equal f, Navigation::NORTH
+    assert_equal f, 'NORTH'
   end
 
   def test_place_robot_ignore_if_trying_to_move_off_board_west
     robot = Robot.new
-    robot.place(1, 3, Navigation::WEST)
+    robot.place(1, 3, 'WEST')
     robot.move
     robot.move
     x, y, f = robot.report
     assert_equal x, 0
     assert_equal y, 3
-    assert_equal f, Navigation::WEST
+    assert_equal f, 'WEST'
   end
 end
