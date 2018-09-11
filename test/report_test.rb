@@ -36,8 +36,8 @@ class ReportTests < Test::Unit::TestCase
 
   def test_turn_left_turn_right
     robot = Robot.new(4, 4, Navigation::Facing.new('south', [0, -1]))
-    robot_left = Rotating.new.rotate(robot, :left)
-    robot_right = Rotating.new(robot_left, :right)
+    robot_left = Rotation.new.rotate(robot, :left)
+    robot_right = Rotation.new.rotate(robot_left, :right)
     x, y, f = Reporting.new.report(robot_right)
     assert_equal x, 4
     assert_equal y, 4
