@@ -19,7 +19,6 @@ class Rotation
     extend Placed
 
     return robot unless placed? robot
-
     robot.f = Navigation::ALL[
       Navigation::ALL.index(robot.f) - 1
     ]
