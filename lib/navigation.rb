@@ -8,6 +8,14 @@ module Navigation
       @label = label
       @coordinates = coordinates
     end
+
+    def to_s
+      @label
+    end
+
+    def ==(other)
+      return true if @label == other.label
+    end
   end
 
   # Represent all points on the compass 90 degrees apart
