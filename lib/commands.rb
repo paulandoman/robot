@@ -1,6 +1,10 @@
 #!/usr/bin/env ruby
 
-require './lib/robot.rb'
+require_relative 'movement.rb'
+require_relative 'placement.rb'
+require_relative 'report.rb'
+require_relative 'rotation.rb'
+require_relative 'robot.rb'
 
 # Control the robot via the command line
 class CommandRunner
@@ -14,23 +18,28 @@ class CommandRunner
 
     loop do
       command, args = parse(gets.chomp)
-      send_command(command, args)
+      *args = process_args(args) unless args.nil?
+
+      process_commands(command, args)
     end
   end
 
   private
 
-  def send_command(command, *args)
-    if args.nil? || args.first.nil?
-      @robot.send(command)
-    else
-      *arguments = args.first.split(',')
-      @robot.send(command, *arguments)
+  def process_commands(command, args)
+    case command
+    when 'place' then @robot = Placement.new.place(@robot, *args)
+    when 'move' then @robot = Movement.new.move(@robot)
+    when 'left' then @robot = Rotation.new.rotate(@robot, :left)
+    when 'right' then @robot = Rotation.new.rotate(@robot, :right)
+    when 'report' then Reporting.new.report(@robot)
+    when 'exit' then exit(0)
+    else raise "Unknown command #{command.inspect}}"
     end
-  rescue NoMethodError
-    puts 'Enter valid command PLACE, MOVE, LEFT, RIGHT, REPORT or exit'
-  rescue ArgumentError
-    puts 'PLACE command has the following format PLACE [x] [y] [facing]'
+  end
+
+  def process_args(args)
+    args.split(',')
   end
 
   def parse(line)
