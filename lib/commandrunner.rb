@@ -27,7 +27,7 @@ class CommandRunner
     when 'left', 'right' then Rotation.new.rotate(@robot, command.to_sym)
     when 'report' then Reporting.new.report(@robot)
     when 'exit' then exit(0)
-    else raise "Unknown command #{command.inspect}}"
+    else raise NoMethodError
     end
   end
 

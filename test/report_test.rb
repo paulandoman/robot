@@ -20,7 +20,7 @@ class ReportTests < Test::Unit::TestCase
   end
 
   def test_report_after_placing_and_rotate
-    robot = Robot.new(0, 0, Navigation::Facing.new('south'))
+    robot = Robot.new(0, 0, 'south')
     @rotation.rotate(robot, :right)
     x, y, f = @reporting.report(robot)
     assert_equal 0, x

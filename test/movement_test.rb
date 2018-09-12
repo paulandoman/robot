@@ -18,7 +18,7 @@ class MovementTests < Test::Unit::TestCase
   end
 
   def test_move_one_spot_north
-    robot = Robot.new(0, 0, Navigation::Facing.new('north'))
+    robot = Robot.new(0, 0, 'north')
     @movement.move(@table, robot)
     assert_equal 0, robot.x
     assert_equal 1, robot.y
@@ -26,7 +26,7 @@ class MovementTests < Test::Unit::TestCase
   end
 
   def test_move_one_spot_south
-    robot = Robot.new(1, 3, Navigation::Facing.new('south'))
+    robot = Robot.new(1, 3, 'south')
     @movement.move(@table, robot)
     assert_equal 1, robot.x
     assert_equal 2, robot.y
@@ -34,7 +34,7 @@ class MovementTests < Test::Unit::TestCase
   end
 
   def test_move_one_spot_west
-    robot = Robot.new(1, 0, Navigation::Facing.new('west'))
+    robot = Robot.new(1, 0, 'west')
     @movement.move(@table, robot)
     assert_equal 0, robot.x
     assert_equal 0, robot.y
@@ -42,7 +42,7 @@ class MovementTests < Test::Unit::TestCase
   end
 
   def test_move_one_spot_east
-    robot = Robot.new(3, 0, Navigation::Facing.new('east'))
+    robot = Robot.new(3, 0, 'east')
     @movement.move(@table, robot)
     assert_equal 4, robot.x
     assert_equal 0, robot.y
@@ -50,7 +50,7 @@ class MovementTests < Test::Unit::TestCase
   end
 
   def test_move_two_spots_north
-    robot = Robot.new(0, 0, Navigation::Facing.new('north'))
+    robot = Robot.new(0, 0, 'north')
     @movement.move(@table, robot)
     @movement.move(@table, robot)
     assert_equal 0, robot.x
@@ -59,7 +59,7 @@ class MovementTests < Test::Unit::TestCase
   end
 
   def test_move_ignore_if_trying_to_move_off_board_north
-    robot = Robot.new(2, 4, Navigation::Facing.new('north'))
+    robot = Robot.new(2, 4, 'north')
     @movement.move(@table, robot)
     assert_equal 2, robot.x
     assert_equal 4, robot.y
@@ -67,7 +67,7 @@ class MovementTests < Test::Unit::TestCase
   end
 
   def test_move_ignore_if_trying_to_move_off_board_west
-    robot = Robot.new(1, 3, Navigation::Facing.new('west'))
+    robot = Robot.new(1, 3, 'west')
     @movement.move(@table, robot)
     @movement.move(@table, robot)
     assert_equal 0, robot.x

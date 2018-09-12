@@ -7,6 +7,6 @@ class Robot
   def initialize(x_coord = nil, y_coord = nil, facing = nil)
     @x = x_coord
     @y = y_coord
-    @f = facing
+    @f = Navigation::Facing.new(facing) unless facing.nil?
   end
 end
