@@ -1,3 +1,5 @@
+require_relative 'navigation'
+
 # Robot has an x, y position and a direction f
 class Robot
   attr_accessor :x, :y, :f

@@ -10,7 +10,7 @@ class RobotTests < Test::Unit::TestCase
   end
 
   def test_robot_initialized_with_fields
-    robot = Robot.new(3, 4, Navigation::Facing.new('south', [0, -1]))
+    robot = Robot.new(3, 4, Navigation::Facing.new('south'))
     assert_equal 3, robot.x
     assert_equal 4, robot.y
     assert_equal 'south', robot.f.to_s
