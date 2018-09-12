@@ -1,39 +1,26 @@
 #!/usr/bin/env ruby
 
-require './lib/robot.rb'
+require_relative 'commandrunner'
+require_relative 'robot'
+require_relative 'table'
 
 # Control the robot via the command line
 class CommandRunner
-  attr_reader :robot
+  attr_reader :robot, :table
+
+  def initialize
+    @robot = Robot.new
+    @table = Table.new
+  end
 
   def run
     puts 'Hi I am Riri the REA Robot! 🤖'
     puts 'Please enter PLACE, MOVE, LEFT, RIGHT, REPORT or exit (to quit)'
 
-    @robot = Robot.new
+    command = CommandRunner.new
 
     loop do
-      command, args = parse(gets.chomp)
-      send_command(command, args)
+      command.read_input(gets.chomp)
     end
-  end
-
-  private
-
-  def send_command(command, *args)
-    if args.nil? || args.first.nil?
-      @robot.send(command)
-    else
-      *arguments = args.first.split(',')
-      @robot.send(command, *arguments)
-    end
-  rescue NoMethodError
-    puts 'Enter valid command PLACE, MOVE, LEFT, RIGHT, REPORT or exit'
-  rescue ArgumentError
-    puts 'PLACE command has the following format PLACE [x] [y] [facing]'
-  end
-
-  def parse(line)
-    line.to_s.strip.downcase.split(' ')
   end
 end

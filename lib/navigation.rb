@@ -4,18 +4,33 @@ module Navigation
   class Facing
     attr_reader :label, :coordinates
 
-    def initialize(label, coordinates)
+    def initialize(label)
       @label = label
-      @coordinates = coordinates
+      @coordinates = COORDS[label]
+    end
+
+    def to_s
+      @label
+    end
+
+    def ==(other)
+      return true if @label == other.label
     end
   end
 
+  COORDS = {
+    'north' => [0, 1],
+    'east' => [1, 0],
+    'south' => [0, -1],
+    'west' => [-1, 0]
+  }.freeze
+
   # Represent all points on the compass 90 degrees apart
   ALL = [
-    Facing.new('north', [0, 1]),
-    Facing.new('east', [1, 0]),
-    Facing.new('south', [0, -1]),
-    Facing.new('west', [-1, 0])
+    Facing.new('north'),
+    Facing.new('east'),
+    Facing.new('south'),
+    Facing.new('west')
   ].freeze
 
   # return true if string is contained within label attribute of any

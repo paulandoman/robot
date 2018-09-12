@@ -1,86 +1,77 @@
-require './lib/robot.rb'
-require './lib/navigation.rb'
+require './lib/robot'
+require './lib/movement'
+require './lib/navigation'
 require 'test/unit'
 
 class MovementTests < Test::Unit::TestCase
-  def test_report_values_are_nil_when_trying_to_move_unplaced_robot
-    robot = Robot.new
-    robot.move
-    x, y, f = robot.report
-    assert_nil x
-    assert_nil y
-    assert_nil f
+  def setup
+    @table = Table.new
+    @movement = Movement.new
   end
 
-  def test_place_robot_move_one_spot_north
+  def test_move_unplaced_robot_fields_are_nil
     robot = Robot.new
-    robot.place(0, 0, 'NORTH')
-    robot.move
-    x, y, f = robot.report
-    assert_equal x, 0
-    assert_equal y, 1
-    assert_equal f, 'NORTH'
+    @movement.move(@table, robot)
+    assert_nil robot.x
+    assert_nil robot.y
+    assert_nil robot.f
   end
 
-  def test_place_robot_move_one_spot_south
-    robot = Robot.new
-    robot.place(1, 3, 'SOUTH')
-    robot.move
-    x, y, f = robot.report
-    assert_equal x, 1
-    assert_equal y, 2
-    assert_equal f, 'SOUTH'
+  def test_move_one_spot_north
+    robot = Robot.new(0, 0, 'north')
+    @movement.move(@table, robot)
+    assert_equal 0, robot.x
+    assert_equal 1, robot.y
+    assert_equal 'north', robot.f.to_s
   end
 
-  def test_place_robot_move_one_spot_west
-    robot = Robot.new
-    robot.place(1, 0, 'WEST')
-    robot.move
-    x, y, f = robot.report
-    assert_equal x, 0
-    assert_equal y, 0
-    assert_equal f, 'WEST'
+  def test_move_one_spot_south
+    robot = Robot.new(1, 3, 'south')
+    @movement.move(@table, robot)
+    assert_equal 1, robot.x
+    assert_equal 2, robot.y
+    assert_equal 'south', robot.f.to_s
   end
 
-  def test_place_robot_move_one_spot_east
-    robot = Robot.new
-    robot.place(3, 0, 'EAST')
-    robot.move
-    x, y, f = robot.report
-    assert_equal x, 4
-    assert_equal y, 0
-    assert_equal f, 'EAST'
+  def test_move_one_spot_west
+    robot = Robot.new(1, 0, 'west')
+    @movement.move(@table, robot)
+    assert_equal 0, robot.x
+    assert_equal 0, robot.y
+    assert_equal 'west', robot.f.to_s
   end
 
-  def test_place_robot_move_two_spots_north
-    robot = Robot.new
-    robot.place(0, 0, 'NORTH')
-    robot.move
-    robot.move
-    x, y, f = robot.report
-    assert_equal x, 0
-    assert_equal y, 2
-    assert_equal f, 'NORTH'
+  def test_move_one_spot_east
+    robot = Robot.new(3, 0, 'east')
+    @movement.move(@table, robot)
+    assert_equal 4, robot.x
+    assert_equal 0, robot.y
+    assert_equal 'east', robot.f.to_s
   end
 
-  def test_place_robot_ignore_if_trying_to_move_off_board_north
-    robot = Robot.new
-    robot.place(2, 4, 'NORTH')
-    robot.move
-    x, y, f = robot.report
-    assert_equal x, 2
-    assert_equal y, 4
-    assert_equal f, 'NORTH'
+  def test_move_two_spots_north
+    robot = Robot.new(0, 0, 'north')
+    @movement.move(@table, robot)
+    @movement.move(@table, robot)
+    assert_equal 0, robot.x
+    assert_equal 2, robot.y
+    assert_equal 'north', robot.f.to_s
   end
 
-  def test_place_robot_ignore_if_trying_to_move_off_board_west
-    robot = Robot.new
-    robot.place(1, 3, 'WEST')
-    robot.move
-    robot.move
-    x, y, f = robot.report
-    assert_equal x, 0
-    assert_equal y, 3
-    assert_equal f, 'WEST'
+  def test_move_ignore_if_trying_to_move_off_board_north
+    robot = Robot.new(2, 4, 'north')
+    @movement.move(@table, robot)
+    assert_equal 2, robot.x
+    assert_equal 4, robot.y
+    assert_equal 'north', robot.f.to_s
+  end
+
+  def test_move_ignore_if_trying_to_move_off_board_west
+    robot = Robot.new(1, 3, 'west')
+    @movement.move(@table, robot)
+    @movement.move(@table, robot)
+    assert_equal 0, robot.x
+    assert_equal 3, robot.y
+    assert_equal 'west', robot.f.to_s
   end
 end
