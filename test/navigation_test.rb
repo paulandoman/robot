@@ -1,4 +1,4 @@
-require './lib/navigation.rb'
+require './lib/navigation'
 require 'test/unit'
 
 class NavigationTests < Test::Unit::TestCase

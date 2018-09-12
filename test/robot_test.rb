@@ -1,4 +1,4 @@
-require './lib/robot.rb'
+require './lib/robot'
 require 'test/unit'
 
 class RobotTests < Test::Unit::TestCase

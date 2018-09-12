@@ -1,4 +1,4 @@
-require_relative 'placed.rb'
+require_relative 'placed'
 
 # Reports on the robot
 class Reporting

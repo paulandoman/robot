@@ -1,5 +1,5 @@
-require_relative 'placed.rb'
-require_relative 'navigation.rb'
+require_relative 'placed'
+require_relative 'navigation'
 
 # Rotates a robot
 class Rotation

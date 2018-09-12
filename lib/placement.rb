@@ -1,14 +1,13 @@
-require_relative 'navigation.rb'
-require_relative 'border.rb'
-require_relative 'valid.rb'
+require_relative 'navigation'
+require_relative 'valid'
 
 # Places a robot
 class Placement
   # place robot if coordinates are within boundary
-  def place(robot, x_coord, y_coord, facing)
+  def place(table, robot, x_coord, y_coord, facing)
     extend Valid
 
-    return robot unless valid?([x_coord, y_coord])
+    return robot unless valid?(table, [x_coord, y_coord])
 
     if Navigation.has? facing
       robot.f = Navigation.get facing
