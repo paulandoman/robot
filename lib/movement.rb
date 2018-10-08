@@ -8,6 +8,7 @@ class Movement
     extend Placed, Valid
 
     return robot unless placed? robot
+
     new_location = one_space_forward robot
 
     robot.x, robot.y = new_location if valid?(table, new_location)

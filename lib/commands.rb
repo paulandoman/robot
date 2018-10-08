@@ -1,26 +1,48 @@
-#!/usr/bin/env ruby
-
-require_relative 'commandrunner'
+require_relative 'movement'
+require_relative 'placement'
+require_relative 'report'
+require_relative 'rotation'
 require_relative 'robot'
 require_relative 'table'
 
-# Control the robot via the command line
-class CommandRunner
-  attr_reader :robot, :table
-
-  def initialize
-    @robot = Robot.new
-    @table = Table.new
+# Run commands to control robot
+class Commands
+  def initialize(robot = Robot.new, table = Table.new)
+    @robot = robot
+    @table = table
   end
 
-  def run
-    puts 'Hi I am Riri the REA Robot! 🤖'
-    puts 'Please enter PLACE, MOVE, LEFT, RIGHT, REPORT or exit (to quit)'
+  def read_input(input_command)
+    command, args = parse(input_command)
+    *args = process_args(args) unless args.nil?
 
-    command = CommandRunner.new
-
-    loop do
-      command.read_input(gets.chomp)
+    begin
+      process_commands(command, args)
+    rescue NoMethodError
+      puts 'Enter valid command PLACE, MOVE, LEFT, RIGHT, REPORT or exit'
+    rescue ArgumentError
+      puts 'PLACE command has the following format PLACE [x],[y],[facing]'
     end
+  end
+
+  private
+
+  def process_commands(command, args = [])
+    case command
+    when 'place' then Placement.new.place(@table, @robot, *args)
+    when 'move' then Movement.new.move(@table, @robot)
+    when 'left', 'right' then Rotation.new.rotate(@robot, command.to_sym)
+    when 'report' then Reporting.new.report(@robot)
+    when 'exit' then exit(0)
+    else puts "command '#{command}' does not match!"
+    end
+  end
+
+  def process_args(args)
+    args.split(',')
+  end
+
+  def parse(line)
+    line.to_s.strip.downcase.split(' ')
   end
 end

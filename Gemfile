@@ -1,3 +1,3 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 gem 'rake', '~> 12.3'
-gem 'test-unit'
+gem 'rspec', '~> 3.0'
